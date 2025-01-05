@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Integrated Expo Router for type-safe navigation and routing
+  - Set up file-based routing structure in src/app directory
+  - Configured _layout.tsx for root navigation container
 - Implemented header component with profile image, greeting, and menu icon
 - Created StreakCard component for tracking daily progress
 - Created PracticeCard component with question counter badge
@@ -81,6 +84,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Husky Documentation](https://typicode.github.io/husky/)
 - [lint-staged Documentation](https://github.com/okonet/lint-staged)
 - [TypeScript in React Native](https://reactnative.dev/docs/typescript)
+- [Expo Router](https://docs.expo.dev/router/introduction/)
 
 [Unreleased]: https://github.com/username/tech-quiz/compare/v0.2.0...HEAD
 [0.2.0]: https://github.com/username/tech-quiz/compare/v0.1.0...v0.2.0
