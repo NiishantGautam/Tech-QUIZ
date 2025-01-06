@@ -1,10 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, Image, View, SafeAreaView, ScrollView } from "react-native";
+import { StyleSheet, Text, Image, View, SafeAreaView, ScrollView, Pressable } from "react-native";
 import { theme } from "../constants/theme";
 import { StreakCard } from "../components/StreakCard";
 import { PracticeCard } from "../components/PracticeCard";
 import { ReviewCard } from "../components/ReviewCard";
 import { ExploreCard } from "../components/ExploreCard";
+import * as Haptics from "expo-haptics";
 
 
 export default function App() {
@@ -12,13 +13,60 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.headerContainer}>
-          <Image source={require("../../assets/icon.png")} style={styles.headerLogo} />
+
+        <Pressable 
+          onPress={() => {
+            console.log("Profile Icon pressed");
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          }}
+
+          style={({pressed}) => [
+            styles.profileContainer, 
+            pressed && {
+              transform: [{ scale: 0.95 }],
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              borderWidth:2,
+              borderColor: theme.colorTeal
+            }
+          ]}
+          android_ripple={{ 
+            color: 'rgba(255, 255, 255, 0.1)', 
+            borderless: true 
+          }}
+
+
+        >
+             <Image source={require("../../assets/icon.png")} style={styles.headerLogo} />
+        </Pressable>
+
+       
           <View style={styles.greetingContainer}>
             <Text style={styles.greetingText}>Happy learning,</Text>
             <Text style={styles.username}>Sippy</Text>
           </View>
           <View style={styles.menuContainer}>
-            <Text style={styles.menuIcon}>☰</Text>
+            <Pressable 
+              onPress={() => {
+                console.log("Menu button pressed");
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              }}
+              style={({ pressed }) => [
+                styles.menuButton,
+                pressed && {
+                  transform: [{ scale: 0.9 }],
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  borderColor: theme.colorTeal,
+                  borderWidth: 2
+                }
+              ]}
+              android_ripple={{ 
+                color: 'rgba(255, 255, 255, 0.2)', 
+                borderless: true,
+                foreground: true
+              }}
+            >
+              <Text style={styles.menuIcon}>☰</Text>
+            </Pressable>
           </View>
         </View>
         <StreakCard />
@@ -54,7 +102,7 @@ const styles = StyleSheet.create({
   },
   greetingContainer: {
     flex: 1,
-    marginLeft: 12,
+    marginLeft: 30,
   },
   greetingText: {
     color: theme.colorLightGray,
@@ -68,8 +116,24 @@ const styles = StyleSheet.create({
   menuContainer: {
     paddingLeft: 16,
   },
-  menuIcon: {
-    color: theme.colorWhite,
-    fontSize: 24,
+  menuButton: {
+    padding: 12,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    borderWidth: 2,
+    borderColor: 'transparent',
   },
+  menuIcon: {
+    fontSize: 24,
+    color: theme.colorWhite,
+    fontWeight: '600',
+  },
+  profileContainer: {
+    borderRadius: 12,
+    overflow: 'hidden',
+    borderWidth: 2,
+    borderColor: 'transparent',
+  }
 });
