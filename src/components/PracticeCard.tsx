@@ -2,18 +2,19 @@ import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { theme } from "../constants/theme";
 import * as Haptics from "expo-haptics";
+import { useRouter } from "expo-router";
 
 interface PracticeCardProps {
   questionCount?: number;
-  onPress?: () => void;
 }
 
-export const PracticeCard = ({ questionCount = 63, onPress }: PracticeCardProps) => {
-
+export const PracticeCard = ({ questionCount = 63 }: PracticeCardProps) => {
+  const router = useRouter();
 
   const handlePracticePress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-  }
+    router.push("/quiz");
+  };
 
   return (
     <TouchableOpacity style={styles.container} onPress={handlePracticePress}>

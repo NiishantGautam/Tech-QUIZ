@@ -5,21 +5,39 @@ A React Native quiz application built with Expo, focusing on technical questions
 ## Project Structure
 
 ```
-tech-quiz/
-├── assets/         # Images and assets
-├── src/           # Source code
-│   ├── app/       # Main application code
-│   ├── components/# Reusable components
-│   └── constants/ # Constants and configuration
-├── .eslintrc.js   # ESLint configuration
-├── .prettierrc    # Prettier configuration
-├── app.json        # Expo configuration
-└── package.json    # Project dependencies and scripts
+src/
+├── app/                    # Main application routes
+│   ├── _layout.tsx        # Root layout with Stack navigation
+│   ├── index.tsx          # Home screen
+│   └── quiz.tsx           # Quiz screen
+│
+├── components/            # Reusable components
+│   ├── ExploreCard.tsx
+│   ├── PracticeCard.tsx
+│   ├── ReviewCard.tsx
+│   └── StreakCard.tsx
+│
+└── constants/            # Global constants and configurations
+    └── theme.ts         # Theme configuration and colors
 ```
 
-## Splash Screen Versions
+## Features
 
-<img src="assets/versions/SplashVersion.png" alt="Splash Screen Versions" width="100%" />
+- File-based routing with Expo Router
+- Modern UI with custom components
+- Interactive cards with haptic feedback
+- Consistent theming across the app
+- Type-safe navigation
+- Gesture-based navigation
+
+## Tech Stack
+
+- React Native with Expo
+- TypeScript for type safety
+- Expo Router for navigation
+- Expo Haptics for tactile feedback
+- ESLint & Prettier for code formatting
+- Husky for pre-commit hooks
 
 ## Getting Started
 
