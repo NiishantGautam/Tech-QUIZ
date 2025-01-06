@@ -17,6 +17,13 @@ src/
 │   ├── ReviewCard.tsx
 │   └── StreakCard.tsx
 │
+├── features/             # Feature-specific modules
+│   └── quiz/            # Quiz feature
+│       ├── components/  # Quiz-specific components
+│       │   └── QuestionCard.tsx
+│       └── types/      # Quiz-related types
+│           └── index.ts
+│
 └── constants/            # Global constants and configurations
     └── theme.ts         # Theme configuration and colors
 ```

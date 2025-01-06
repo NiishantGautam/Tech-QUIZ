@@ -25,6 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Implemented consistent hover effects with teal borders
   - Added Android ripple effects for better cross-platform experience
 - Added haptic feedback to menu button interactions for better user experience
+- QuestionCard component with question text and answer options
+- AnswerOption component for quiz choices
+- Theme constants for consistent color management
 
 ### Changed
 
@@ -35,6 +38,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved UI layout with consistent spacing and margins
 - Converted horizontal chapter list to vertical grid with peek effect
 - Enhanced scrolling experience with hidden indicators
+- Implemented centralized theme system with color constants
+- Updated QuizScreen to use theme colors
+- Enhanced QuestionCard and AnswerOption styling
+- Refactored inline styles to use theme constants
 
 ### Technical
 
@@ -45,6 +52,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Implemented TouchableOpacity for interactive cards
 - Optimized scroll views with maxHeight constraints
 - Added peek effect for better content discovery
+- Added `as const` assertion to theme object for better type safety
+- Organized quiz-related components into feature-based structure
+- Improved component folder organization
 
 ## [0.2.0] - 2025-01-04
 
