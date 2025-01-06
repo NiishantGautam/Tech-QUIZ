@@ -21,23 +21,11 @@ src/
     └── theme.ts         # Theme configuration and colors
 ```
 
-## Features
+## Screens:
 
-- File-based routing with Expo Router
-- Modern UI with custom components
-- Interactive cards with haptic feedback
-- Consistent theming across the app
-- Type-safe navigation
-- Gesture-based navigation
+#### Dashboard:
 
-## Tech Stack
-
-- React Native with Expo
-- TypeScript for type safety
-- Expo Router for navigation
-- Expo Haptics for tactile feedback
-- ESLint & Prettier for code formatting
-- Husky for pre-commit hooks
+  <img src="assets/versions/SplashVersion.png" alt="Splash Screen Versions" width="100%" />
 
 ## Getting Started
 
