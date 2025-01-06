@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { theme } from "../constants/theme";
+import * as Haptics from "expo-haptics";
 
 interface PracticeCardProps {
   questionCount?: number;
@@ -8,15 +9,21 @@ interface PracticeCardProps {
 }
 
 export const PracticeCard = ({ questionCount = 63, onPress }: PracticeCardProps) => {
+
+
+  const handlePracticePress = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+  }
+
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity style={styles.container} onPress={handlePracticePress}>
       <View style={styles.iconContainer}>
         <Text style={styles.icon}>📝</Text>
       </View>
       <View style={styles.content}>
         <Text style={styles.title}>Practice flashcards</Text>
         <Text style={styles.description}>
-          Answer questions based on the topics you are learning in the course.
+          Answer questions based on the topics you are learning from our flashcards.
         </Text>
       </View>
       <View style={styles.badge}>

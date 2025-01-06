@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added theme configuration with new color palette (peach and teal)
 - Set up ESLint with Prettier for consistent code formatting
 - Added ScrollView for better content scrolling
+- Added haptic feedback to menu button interactions for better user experience
 
 ### Changed
 

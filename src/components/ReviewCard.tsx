@@ -1,14 +1,20 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { theme } from "../constants/theme";
+import * as Haptics from "expo-haptics";
 
 interface ReviewCardProps {
   onPress?: () => void;
 }
 
 export const ReviewCard = ({ onPress }: ReviewCardProps) => {
+
+  const handleReviewPress = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+  }
+
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity style={styles.container} onPress={handleReviewPress}>
       <View style={styles.iconContainer}>
         <Text style={styles.icon}>🔄</Text>
       </View>

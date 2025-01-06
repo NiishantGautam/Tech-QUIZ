@@ -6,6 +6,7 @@ import { PracticeCard } from "../components/PracticeCard";
 import { ReviewCard } from "../components/ReviewCard";
 import { ExploreCard } from "../components/ExploreCard";
 
+
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
