@@ -10,7 +10,8 @@
     "format:check": "prettier . --check",
     "format:fix": "prettier . --write",
     "lint:fix": "eslint . --fix",
-    "lint:check": "eslint ."
+    "lint:check": "eslint .",
+    "prepare": "husky install"
   },
   "dependencies": {
     "expo": "~52.0.23",
@@ -38,7 +39,7 @@
     "typescript": "^5.3.3"
   },
   "lint-staged": {
-    "*.{ts, tsx, js, jsx}": [
+    "*.{ts,tsx,js,jsx}": [
       "npm run lint:fix",
       "npm run format:fix"
     ]
