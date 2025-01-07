@@ -8,10 +8,9 @@ interface ReviewCardProps {
 }
 
 export const ReviewCard = ({ onPress }: ReviewCardProps) => {
-
   const handleReviewPress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-  }
+  };
 
   return (
     <TouchableOpacity style={styles.container} onPress={handleReviewPress}>

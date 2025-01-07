@@ -1,0 +1,142 @@
+export default [
+  {
+    id: "react_01",
+    question: "What is React?",
+    options: [
+      "A library for building user interfaces",
+      "A framework for building mobile apps",
+      "A database management system",
+      "A programming language",
+    ],
+    answer: "A library for building user interfaces",
+  },
+  {
+    id: "react_02",
+    question: "What is the Virtual DOM in React?",
+    options: [
+      "In-memory representation of real DOM",
+      "A browser feature",
+      "A database system",
+      "A routing solution",
+    ],
+    answer: "In-memory representation of real DOM",
+  },
+  {
+    id: "react_03",
+    question: "Which hook is used for side effects in React?",
+    options: ["useEffect", "useState", "useContext", "useReducer"],
+    answer: "useEffect",
+  },
+  {
+    id: "javascript_01",
+    question: "What is hoisting in JavaScript?",
+    options: [
+      "Variable and function declarations moving to top",
+      "Moving code to production",
+      "Lifting state up",
+      "Converting code to binary",
+    ],
+    answer: "Variable and function declarations moving to top",
+  },
+  {
+    id: "javascript_02",
+    question: "What is closure in JavaScript?",
+    options: [
+      "Function with access to outer scope",
+      "A way to close browser",
+      "A type of loop",
+      "Error handling mechanism",
+    ],
+    answer: "Function with access to outer scope",
+  },
+  {
+    id: "typescript_01",
+    question: "What is the main benefit of TypeScript?",
+    options: [
+      "Static type checking",
+      "Faster runtime performance",
+      "Smaller bundle size",
+      "Built-in database support",
+    ],
+    answer: "Static type checking",
+  },
+  {
+    id: "typescript_02",
+    question: "What is an interface in TypeScript?",
+    options: [
+      "A way to define object types",
+      "A class implementation",
+      "A runtime feature",
+      "A testing tool",
+    ],
+    answer: "A way to define object types",
+  },
+  {
+    id: "html_01",
+    question: "Which is a new feature introduced in HTML5?",
+    options: ["Semantic elements", "Tables", "Forms", "Links"],
+    answer: "Semantic elements",
+  },
+  {
+    id: "html_02",
+    question: "What is the purpose of the canvas element?",
+    options: ["Drawing graphics", "Playing video", "Styling content", "Form validation"],
+    answer: "Drawing graphics",
+  },
+  {
+    id: "css_01",
+    question: "What is CSS Flexbox primarily used for?",
+    options: [
+      "Creating flexible layouts",
+      "Adding animations",
+      "Styling text",
+      "Managing databases",
+    ],
+    answer: "Creating flexible layouts",
+  },
+  {
+    id: "css_02",
+    question: "What is the CSS Box Model?",
+    options: [
+      "Content, padding, border, margin",
+      "Only width and height",
+      "Just the visible part",
+      "Background and color",
+    ],
+    answer: "Content, padding, border, margin",
+  },
+  {
+    id: "nodejs_01",
+    question: "What is Node.js?",
+    options: [
+      "JavaScript runtime environment",
+      "Web browser",
+      "Programming language",
+      "Database system",
+    ],
+    answer: "JavaScript runtime environment",
+  },
+  {
+    id: "nodejs_02",
+    question: "What is npm in Node.js?",
+    options: ["Package manager", "Programming language", "Database", "Testing framework"],
+    answer: "Package manager",
+  },
+  {
+    id: "git_01",
+    question: "What is git pull?",
+    options: [
+      "Fetch and merge changes",
+      "Only push changes",
+      "Create new branch",
+      "Delete repository",
+    ],
+    answer: "Fetch and merge changes",
+  },
+  {
+    id: "git_02",
+    question: "What does git branch do?",
+    options: ["Creates new branch", "Deletes files", "Merges code", "Uploads to server"],
+    answer: "Creates new branch",
+  },
+];

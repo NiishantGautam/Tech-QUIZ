@@ -12,6 +12,7 @@ src/
 │   └── quiz.tsx           # Quiz screen
 │
 ├── components/            # Reusable components
+│   ├─
 │   ├── ExploreCard.tsx
 │   ├── PracticeCard.tsx
 │   ├── ReviewCard.tsx
@@ -20,12 +21,14 @@ src/
 ├── features/             # Feature-specific modules
 │   └── quiz/            # Quiz feature
 │       ├── components/  # Quiz-specific components
-│       │   └── QuestionCard.tsx
+│       │   ├── QuestionCard.tsx
+│       │   └── AnswerOption.tsx
 │       └── types/      # Quiz-related types
-│           └── index.ts
+│           └── types.ts
 │
 └── constants/            # Global constants and configurations
-    └── theme.ts         # Theme configuration and colors
+    ├── theme.ts         # Theme configuration and colors
+    └── questions.ts     # Quiz questions data
 ```
 
 ## Screens:

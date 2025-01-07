@@ -1,17 +1,31 @@
 import { View, Text, StyleSheet } from "react-native";
 import { theme } from "../../../constants/theme";
 import AnswerOption from "./AnswerOption";
+import { Question } from "../../../features/quiz/types/types";
+import React from "react";
 
-export default function QuestionCard() {
+type QuestionCardProps = {
+  question: Question;
+};
+
+export default function QuestionCard({ question }: QuestionCardProps) {
+  const selectedOption = question.options[0];
+
   return (
     <View style={styles.questionCard}>
-      <Text style={styles.question}>What is React native?</Text>
+      <Text style={styles.question}>{question.question}</Text>
 
       <View style={styles.optionsContainer}>
-        <AnswerOption />
-        <AnswerOption />
-        <AnswerOption />
-        <AnswerOption />
+        {question.options.map(option => {
+          return (
+            <AnswerOption
+              key={option}
+              option={option}
+              isSelected={option === selectedOption}
+              onPress={() => console.warn("Pressed", option)}
+            />
+          );
+        })}
       </View>
     </View>
   );
