@@ -2,6 +2,10 @@
 
 A modern quiz application built with React Native and Expo, featuring authentication, interactive learning, and progress tracking.
 
+## Demo
+
+![Tech-QUIZ App Demo](assets/area.gif)
+
 ## Project Structure
 
 ```
@@ -21,6 +25,7 @@ Tech-QUIZ/
 │   └── utils/
 │       └── cache.ts                 # Token caching utilities
 ├── assets/                          # Images and static assets
+│   └── area.gif                    # App demo animation
 ├── .gitignore
 ├── app.json
 ├── babel.config.js
@@ -28,37 +33,12 @@ Tech-QUIZ/
 └── README.md
 ```
 
-## Features
-
-- **Authentication**
-  - Email-based sign up and sign in
-  - Email verification system
-  - Secure token management
-  - Password visibility toggle
-
-- **Onboarding**
-  - Interactive onboarding flow
-  - Learning methodology introduction
-  - Progress tracking preview
-
-- **Main App**
-  - Quiz interface
-  - Progress tracking
-  - User profile management
-
-## Tech Stack
-
-- React Native
-- Expo Router
-- Clerk Authentication
-- Expo SecureStore
-- TypeScript
-
 ## Changelog
 
 ### Version 0.1.0 (2025-01-08)
 
 #### Added
+
 - Initial project setup with Expo and React Native
 - Authentication system using Clerk
 - Onboarding screens with learning methodology
@@ -70,6 +50,7 @@ Tech-QUIZ/
 - Modern UI components and styling
 
 #### Enhanced
+
 - Centered authentication forms
 - Improved form validation and error handling
 - Added loading states for better UX
@@ -78,6 +59,7 @@ Tech-QUIZ/
 - Updated onboarding content with learning focus
 
 #### Security
+
 - Implemented secure password handling
 - Added email verification system
 - Secure token management
