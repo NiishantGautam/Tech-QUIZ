@@ -12,6 +12,7 @@ import {
 import { useRouter } from "expo-router";
 import { useSignUp } from "@clerk/clerk-expo";
 import { StatusBar } from "expo-status-bar";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function SignUp() {
   // Navigation
@@ -26,6 +27,7 @@ export default function SignUp() {
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [pendingVerification, setPendingVerification] = useState(false);
 
   // Handle sign up
@@ -168,14 +170,19 @@ export default function SignUp() {
 
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Password</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Create a password"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-            autoComplete="password-new"
-          />
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={[styles.input, styles.passwordInput]}
+              placeholder="Create a password"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry={!showPassword}
+              autoComplete="password-new"
+            />
+            <TouchableOpacity style={styles.eyeIcon} onPress={() => setShowPassword(!showPassword)}>
+              <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color="#666" />
+            </TouchableOpacity>
+          </View>
         </View>
 
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
@@ -207,27 +214,37 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    padding: 24,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: 100,
   },
   header: {
-    marginTop: 40,
+    alignItems: "center",
     marginBottom: 32,
+    width: "100%",
+    paddingHorizontal: 24,
   },
   title: {
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: "700",
     color: "#1a1a1a",
     marginBottom: 8,
+    textAlign: "center",
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 15,
     color: "#666",
+    textAlign: "center",
   },
   form: {
-    gap: 20,
+    gap: 16,
+    paddingHorizontal: 24,
+    width: "100%",
+    maxWidth: 360,
   },
   inputContainer: {
     gap: 8,
+    width: "100%",
   },
   label: {
     fontSize: 14,
@@ -237,9 +254,24 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "#f5f5f5",
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 14,
     borderRadius: 12,
     fontSize: 16,
+    width: "100%",
+  },
+  passwordContainer: {
+    position: "relative",
+    width: "100%",
+  },
+  passwordInput: {
+    paddingRight: 50, // Make room for the eye icon
+  },
+  eyeIcon: {
+    position: "absolute",
+    right: 12,
+    top: "50%",
+    transform: [{ translateY: -12 }],
+    padding: 4,
   },
   button: {
     backgroundColor: "#007AFF",
@@ -247,6 +279,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: "center",
     marginTop: 8,
+    width: "100%",
   },
   buttonDisabled: {
     opacity: 0.7,
@@ -260,14 +293,15 @@ const styles = StyleSheet.create({
     color: "#ff3b30",
     fontSize: 14,
     textAlign: "center",
+    marginTop: 8,
   },
   footer: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    gap: 8,
-    marginTop: "auto",
-    paddingBottom: 24,
+    gap: 4,
+    marginTop: 24,
+    width: "100%",
   },
   footerText: {
     color: "#666",

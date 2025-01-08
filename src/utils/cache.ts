@@ -2,6 +2,16 @@ import * as SecureStore from "expo-secure-store";
 import { Platform } from "react-native";
 import { TokenCache } from "@clerk/clerk-expo/dist/cache";
 
+export const clearTokenCache = async () => {
+  try {
+    await SecureStore.deleteItemAsync("clerk-db-jwt");
+    await SecureStore.deleteItemAsync("clerk-js-sdk");
+    console.log("Token cache cleared successfully");
+  } catch (error) {
+    console.error("Error clearing token cache:", error);
+  }
+};
+
 const createTokenCache = (): TokenCache => {
   return {
     getToken: async (key: string) => {

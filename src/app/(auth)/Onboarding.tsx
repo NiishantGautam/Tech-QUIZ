@@ -12,27 +12,30 @@ const bgs = ["#A5BBFF", "#DDBEFE", "#FF63ED", "#B98EFF"];
 const DATA = [
   {
     key: "3571572",
-    title: "Multi-lateral intermediate moratorium",
-    description: "I'll back up the multi-byte XSS matrix, that should feed the SCSI application!",
+    title: "Active Recall Learning",
+    description:
+      "Master programming concepts through interactive quizzes and challenges. Our spaced repetition system helps you retain knowledge longer!",
     image: "https://cdn-icons-png.flaticon.com/256/3571/3571572.png",
   },
   {
     key: "3571747",
-    title: "Automated radical data-warehouse",
-    description: "Use the optical SAS system, then you can navigate the auxiliary alarm!",
+    title: "Track Your Progress",
+    description:
+      "Monitor your learning journey with detailed analytics. Watch your knowledge grow as you complete daily challenges and maintain your streak!",
     image: "https://cdn-icons-png.flaticon.com/256/3571/3571747.png",
   },
   {
     key: "3571680",
-    title: "Inverse attitude-oriented system engine",
+    title: "Practice Makes Perfect",
     description:
-      "The ADP array is down, compress the online sensor so we can input the HTTP panel!",
+      "Regular practice sessions with real-world coding problems help reinforce your understanding. Learn from mistakes and improve continuously!",
     image: "https://cdn-icons-png.flaticon.com/256/3571/3571680.png",
   },
   {
     key: "3571603",
-    title: "Monitored global data-warehouse",
-    description: "We need to program the open-source IB interface!",
+    title: "Learn Together",
+    description:
+      "Join a community of tech enthusiasts. Compare scores, challenge friends, and motivate each other to excel in your learning journey!",
     image: "https://cdn-icons-png.flaticon.com/256/3571/3571603.png",
   },
 ];
