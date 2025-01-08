@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Integrated Expo Router for type-safe navigation and routing
   - Set up file-based routing structure in src/app directory
-  - Configured _layout.tsx for root navigation container
+  - Configured \_layout.tsx for root navigation container
 - Implemented header component with profile image, greeting, and menu icon
 - Created StreakCard component for tracking daily progress
 - Created PracticeCard component with question counter badge
