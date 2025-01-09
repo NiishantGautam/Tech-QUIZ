@@ -6,8 +6,18 @@ import { PracticeCard } from "../../components/PracticeCard";
 import { ReviewCard } from "../../components/ReviewCard";
 import { ExploreCard } from "../../components/ExploreCard";
 import * as Haptics from "expo-haptics";
+import { Menu } from "../../components/Menu";
+import { useState } from "react";
 
 export default function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const onHamburgerPress = () => {
+    console.log("Menu button pressed");
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -40,10 +50,7 @@ export default function App() {
           </View>
           <View style={styles.menuContainer}>
             <Pressable
-              onPress={() => {
-                console.log("Menu button pressed");
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-              }}
+              onPress={onHamburgerPress}
               style={({ pressed }) => [
                 styles.menuButton,
                 pressed && {
@@ -68,6 +75,7 @@ export default function App() {
         <ReviewCard />
         <ExploreCard />
       </ScrollView>
+      {isMenuOpen && <Menu onClose={() => setIsMenuOpen(false)} />}
       <StatusBar style="light" />
     </SafeAreaView>
   );
