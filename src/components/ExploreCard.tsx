@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
-import { theme } from "../constants/theme";
 import { useRouter } from "expo-router";
+import { theme } from "../constants/theme";
 
 const CHAPTERS = [
   "1. Intro to TypeScript",
@@ -40,7 +40,13 @@ export const ExploreCard = ({ onChapterPress }: ExploreCardProps) => {
         </View>
         <Text style={styles.title}>Explore chapters</Text>
       </View>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={true}
+        indicatorStyle="white"
+        nestedScrollEnabled={true}
+        contentContainerStyle={styles.scrollViewContent}
+      >
         <View style={styles.chaptersGrid}>
           {CHAPTERS.map((chapter, index) => (
             <TouchableOpacity
@@ -59,50 +65,65 @@ export const ExploreCard = ({ onChapterPress }: ExploreCardProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.colorDark,
-    borderRadius: 16,
-    padding: 16,
+    backgroundColor: theme.exploreCard.background,
+    borderRadius: 24,
+    padding: 20,
     margin: 16,
     marginTop: 0,
+    overflow: "hidden",
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 16,
+    marginBottom: 20,
   },
   iconContainer: {
-    width: 40,
-    height: 40,
+    width: 32,
+    height: 32,
     justifyContent: "center",
     alignItems: "center",
   },
   icon: {
-    fontSize: 24,
+    fontSize: 20,
   },
   title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: theme.colorWhite,
+    fontSize: 20,
+    fontWeight: "600",
+    color: theme.exploreCard.textColor,
     marginLeft: 12,
   },
   scrollView: {
-    maxHeight: 200,
+    maxHeight: 300,
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+    paddingBottom: 20,
   },
   chaptersGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 8,
-    paddingBottom: 8,
+    gap: 12,
   },
   chapterButton: {
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
-    borderRadius: 20,
+    backgroundColor: theme.exploreCard.buttonBackground,
+    borderRadius: 16,
     paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginBottom: 8,
+    paddingVertical: 12,
+    marginBottom: 12,
+    minWidth: "45%",
+    shadowColor: theme.exploreCard.shadowColor,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   chapterText: {
-    color: theme.colorWhite,
+    color: theme.exploreCard.textColor,
     fontSize: 14,
+    fontWeight: "500",
+    opacity: 0.9,
   },
 });

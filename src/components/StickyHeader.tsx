@@ -1,325 +1,271 @@
-import * as React from "react";
+import React from "react";
 import {
-  Image,
-  Animated,
-  Text,
   View,
-  Dimensions,
+  Text,
+  Image,
   StyleSheet,
-  LayoutRectangle,
   TouchableOpacity,
+  ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Entypo } from "@expo/vector-icons";
-import Constants from "expo-constants";
 import { Menu } from "./Menu";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
+import { getPageContent, NotionPage, NotionBlock } from "../services/notion-api";
+import { theme } from "../constants/theme";
 
-const { height } = Dimensions.get("screen");
+interface StickyHeaderProps {
+  title: string;
+}
 
-const articleParagraphs = [
-  "One advanced diverted domestic sex repeated bringing you old. Possible procured her trifling laughter thoughts property she met way. Companions shy had solicitude favourable own. Which could saw guest man now heard but. Lasted my coming uneasy marked so should. Gravity letters it amongst herself dearest an windows by. Wooded ladies she basket season age her uneasy saw. Discourse unwilling am no described dejection incommode no listening of. Before nature his parish boy. ",
-  "Folly words widow one downs few age every seven. If miss part by fact he park just shew. Discovered had get considered projection who favourable. Necessary up knowledge it tolerably. Unwilling departure education is be dashwoods or an. Use off agreeable law unwilling sir deficient curiosity instantly. Easy mind life fact with see has bore ten. Parish any chatty can elinor direct for former. Up as meant widow equal an share least. ",
-  "Another journey chamber way yet females man. Way extensive and dejection get delivered deficient sincerity gentleman age. Too end instrument possession contrasted motionless. Calling offence six joy feeling. Coming merits and was talent enough far. Sir joy northward sportsmen education. Discovery incommode earnestly no he commanded if. Put still any about manor heard. ",
-  "Village did removed enjoyed explain nor ham saw calling talking. Securing as informed declared or margaret. Joy horrible moreover man feelings own shy. Request norland neither mistake for yet. Between the for morning assured country believe. On even feet time have an no at. Relation so in confined smallest children unpacked delicate. Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem. ",
-  "In it except to so temper mutual tastes mother. Interested cultivated its continuing now yet are. Out interested acceptance our partiality affronting unpleasant why add. Esteem garden men yet shy course. Consulted up my tolerably sometimes perpetual oh. Expression acceptance imprudence particular had eat unsatiable. ",
-  "Had denoting properly jointure you occasion directly raillery. In said to of poor full be post face snug. Introduced imprudence see say unpleasing devonshire acceptance son. Exeter longer wisdom gay nor design age. Am weather to entered norland no in showing service. Nor repeated speaking shy appetite. Excited it hastily an pasture it observe. Snug hand how dare here too. ",
-  "Improve ashamed married expense bed her comfort pursuit mrs. Four time took ye your as fail lady. Up greatest am exertion or marianne. Shy occasional terminated insensible and inhabiting gay. So know do fond to half on. Now who promise was justice new winding. In finished on he speaking suitable advanced if. Boy happiness sportsmen say prevailed offending concealed nor was provision. Provided so as doubtful on striking required. Waiting we to compass assured. ",
-  "You disposal strongly quitting his endeavor two settling him. Manners ham him hearted hundred expense. Get open game him what hour more part. Adapted as smiling of females oh me journey exposed concern. Met come add cold calm rose mile what. Tiled manor court at built by place fanny. Discretion at be an so decisively especially. Exeter itself object matter if on mr in. ",
-  "Effect if in up no depend seemed. Ecstatic elegance gay but disposed. We me rent been part what. An concluded sportsman offending so provision mr education. Bed uncommonly his discovered for estimating far. Equally he minutes my hastily. Up hung mr we give rest half. Painful so he an comfort is manners. ",
-  "Article nor prepare chicken you him now. Shy merits say advice ten before lovers innate add. She cordially behaviour can attempted estimable. Trees delay fancy noise manor do as an small. Felicity now law securing breeding likewise extended and. Roused either who favour why ham. ",
-  "One advanced diverted domestic sex repeated bringing you old. Possible procured her trifling laughter thoughts property she met way. Companions shy had solicitude favourable own. Which could saw guest man now heard but. Lasted my coming uneasy marked so should. Gravity letters it amongst herself dearest an windows by. Wooded ladies she basket season age her uneasy saw. Discourse unwilling am no described dejection incommode no listening of. Before nature his parish boy. ",
-  "Folly words widow one downs few age every seven. If miss part by fact he park just shew. Discovered had get considered projection who favourable. Necessary up knowledge it tolerably. Unwilling departure education is be dashwoods or an. Use off agreeable law unwilling sir deficient curiosity instantly. Easy mind life fact with see has bore ten. Parish any chatty can elinor direct for former. Up as meant widow equal an share least. ",
-  "Another journey chamber way yet females man. Way extensive and dejection get delivered deficient sincerity gentleman age. Too end instrument possession contrasted motionless. Calling offence six joy feeling. Coming merits and was talent enough far. Sir joy northward sportsmen education. Discovery incommode earnestly no he commanded if. Put still any about manor heard. ",
-  "Village did removed enjoyed explain nor ham saw calling talking. Securing as informed declared or margaret. Joy horrible moreover man feelings own shy. Request norland neither mistake for yet. Between the for morning assured country believe. On even feet time have an no at. Relation so in confined smallest children unpacked delicate. Why sir end believe uncivil respect. Always get adieus nature day course for common. My little garret repair to desire he esteem. ",
-  "In it except to so temper mutual tastes mother. Interested cultivated its continuing now yet are. Out interested acceptance our partiality affronting unpleasant why add. Esteem garden men yet shy course. Consulted up my tolerably sometimes perpetual oh. Expression acceptance imprudence particular had eat unsatiable. ",
-  "Had denoting properly jointure you occasion directly raillery. In said to of poor full be post face snug. Introduced imprudence see say unpleasing devonshire acceptance son. Exeter longer wisdom gay nor design age. Am weather to entered norland no in showing service. Nor repeated speaking shy appetite. Excited it hastily an pasture it observe. Snug hand how dare here too. ",
-  "Improve ashamed married expense bed her comfort pursuit mrs. Four time took ye your as fail lady. Up greatest am exertion or marianne. Shy occasional terminated insensible and inhabiting gay. So know do fond to half on. Now who promise was justice new winding. In finished on he speaking suitable advanced if. Boy happiness sportsmen say prevailed offending concealed nor was provision. Provided so as doubtful on striking required. Waiting we to compass assured. ",
-  "You disposal strongly quitting his endeavor two settling him. Manners ham him hearted hundred expense. Get open game him what hour more part. Adapted as smiling of females oh me journey exposed concern. Met come add cold calm rose mile what. Tiled manor court at built by place fanny. Discretion at be an so decisively especially. Exeter itself object matter if on mr in. ",
-  "Effect if in up no depend seemed. Ecstatic elegance gay but disposed. We me rent been part what. An concluded sportsman offending so provision mr education. Bed uncommonly his discovered for estimating far. Equally he minutes my hastily. Up hung mr we give rest half. Painful so he an comfort is manners. ",
-  "Article nor prepare chicken you him now. Shy merits say advice ten before lovers innate add. She cordially behaviour can attempted estimable. Trees delay fancy noise manor do as an small. Felicity now law securing breeding likewise extended and. Roused either who favour why ham. ",
-];
-
-const StickyHeader = () => {
+export const StickyHeader = ({ title }: StickyHeaderProps) => {
   const router = useRouter();
-  const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const params = useLocalSearchParams();
+  const [isDarkMode, setIsDarkMode] = React.useState(true);
   const [showMenu, setShowMenu] = React.useState(false);
-  const [readProgress, setReadProgress] = React.useState(0);
-  const [actionLayout, setActionLayout] = React.useState<LayoutRectangle | null>(null);
-  const scrollY = React.useRef(new Animated.Value(0)).current;
+  const [pageContent, setPageContent] = React.useState<NotionPage | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
 
-  const topEdge = actionLayout
-    ? actionLayout.y - height + actionLayout.height + Constants.statusBarHeight
-    : 0;
-  const inputRange = [-1, 0, topEdge - 60, topEdge, topEdge + 1];
+  const toggleDarkMode = React.useCallback(() => {
+    setIsDarkMode(prev => !prev);
+  }, []);
 
-  const handleBack = () => {
-    router.push("/");
+  React.useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const content = await getPageContent();
+        if (!content) {
+          setError("No content found");
+          return;
+        }
+        setPageContent(content);
+      } catch (error) {
+        console.error("Error fetching content:", error);
+        setError("Failed to load content");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchContent();
+  }, [params.title]);
+
+  const renderBlock = (block: NotionBlock, isDarkMode: boolean) => {
+    switch (block.type) {
+      case "text":
+        return (
+          <Text style={[styles.paragraph, isDarkMode && styles.darkText]}>{block.content}</Text>
+        );
+
+      case "image":
+        return block.url ? (
+          <View style={styles.imageContainer}>
+            <Image source={{ uri: block.url }} style={styles.image} resizeMode="contain" />
+            {block.content && (
+              <Text style={[styles.imageCaption, isDarkMode && styles.darkText]}>
+                {block.content}
+              </Text>
+            )}
+          </View>
+        ) : null;
+
+      case "code":
+        return (
+          <View style={[styles.codeBlock, isDarkMode && styles.darkCodeBlock]}>
+            <View style={styles.codeHeader}>
+              <Text style={[styles.codeLanguage, isDarkMode && styles.darkText]}>
+                {block.language}
+              </Text>
+            </View>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <Text style={[styles.codeText, isDarkMode && styles.darkText]}>{block.content}</Text>
+            </ScrollView>
+          </View>
+        );
+
+      default:
+        return null;
+    }
   };
-
-  const handleScroll = Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
-    useNativeDriver: true,
-    listener: (event: any) => {
-      const offsetY = event.nativeEvent.contentOffset.y;
-      const contentHeight = event.nativeEvent.contentSize.height - height;
-      const progress = Math.min(Math.max((offsetY / contentHeight) * 100, 0), 100);
-      setReadProgress(Math.round(progress));
-    },
-  });
 
   return (
     <SafeAreaView style={[styles.container, isDarkMode && styles.darkContainer]}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={handleBack} style={styles.headerButton}>
-          <Entypo name="chevron-left" size={24} color={isDarkMode ? "white" : "black"} />
+        <TouchableOpacity onPress={() => router.push("/")} style={styles.headerButton}>
+          <Entypo
+            name="chevron-left"
+            size={24}
+            color={isDarkMode ? theme.colorWhite : theme.colorDark}
+          />
         </TouchableOpacity>
-        <View style={styles.progressContainer}>
-          <Text style={[styles.progressText, isDarkMode && styles.darkText]}>
-            {readProgress}% Read
+        {pageContent?.title && (
+          <Text style={[styles.title, isDarkMode && styles.darkText]} numberOfLines={1}>
+            {pageContent.title}
           </Text>
-        </View>
-        <TouchableOpacity onPress={() => setShowMenu(true)} style={styles.headerButton}>
-          <Entypo name="menu" size={24} color={isDarkMode ? "white" : "black"} />
+        )}
+        <TouchableOpacity onPress={toggleDarkMode} style={styles.headerButton}>
+          <Entypo
+            name={isDarkMode ? "light-up" : "moon"}
+            size={24}
+            color={isDarkMode ? theme.colorWhite : theme.colorDark}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setShowMenu(!showMenu)} style={styles.headerButton}>
+          <Entypo name="menu" size={24} color={isDarkMode ? theme.colorWhite : theme.colorDark} />
         </TouchableOpacity>
       </View>
-      <Animated.ScrollView
-        onScroll={handleScroll}
-        style={[{ flexGrow: 0 }, isDarkMode && styles.darkScrollView]}
-        contentContainerStyle={{ padding: 20 }}
-      >
-        <Text style={[styles.heading, isDarkMode && styles.darkText]}>Black & White article</Text>
-        {articleParagraphs.map((text, index) => {
-          return (
-            <View key={`block-${index}`}>
-              {index % 3 === 1 && (
-                <Image
-                  source={{
-                    uri: `https://source.unsplash.com/600x${400 + index}/?blackandwhite`,
-                  }}
-                  style={styles.image}
-                />
-              )}
-              <Text style={[styles.paragraph, isDarkMode && styles.darkText]}>{text}</Text>
-            </View>
-          );
-        })}
-        <View
-          style={styles.bottomActions}
-          onLayout={ev => {
-            setActionLayout(ev.nativeEvent.layout);
-          }}
-        />
-        <View
-          style={[
-            { borderTopColor: isDarkMode ? "#444" : "#333", borderTopWidth: 1, marginTop: 20 },
-          ]}
-        >
-          <Text style={[styles.featuredTitle, isDarkMode && styles.darkText]}>
-            Featured articles
-          </Text>
-          {articleParagraphs.slice(3, 9).map((text, index) => {
-            return (
-              <View
-                key={`featured-${index}`}
-                style={{ flexDirection: "row", flex: 1, marginBottom: 10 }}
-              >
-                <Image
-                  source={{
-                    uri: `https://source.unsplash.com/100x${100 + index}/?blackandwhite`,
-                  }}
-                  style={styles.featuredImage}
-                />
-                <Text style={[styles.paragraph, isDarkMode && styles.darkText]} numberOfLines={2}>
-                  {text}
-                </Text>
-              </View>
-            );
-          })}
-        </View>
-      </Animated.ScrollView>
-      {actionLayout && (
-        <Animated.View
-          style={[
-            styles.bottomActions,
-            {
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              paddingHorizontal: 20,
-              backgroundColor: isDarkMode ? "#1A1A1A" : "white",
-              transform: [
-                {
-                  translateY: scrollY.interpolate({
-                    inputRange,
-                    outputRange: [0, 0, 0, 0, -1],
-                  }),
-                },
-              ],
-            },
-          ]}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              height: 60,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <TouchableOpacity onPress={() => setIsDarkMode(!isDarkMode)}>
-              <Entypo
-                name={isDarkMode ? "light-up" : "adjust"}
-                size={24}
-                color={isDarkMode ? "white" : "black"}
-                style={{ marginHorizontal: 10 }}
-              />
+
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+        {loading ? (
+          <View style={styles.centerContainer}>
+            <ActivityIndicator
+              size="large"
+              color={isDarkMode ? theme.colorWhite : theme.colorDark}
+            />
+          </View>
+        ) : error ? (
+          <View style={styles.centerContainer}>
+            <Text style={[styles.errorText, isDarkMode && styles.darkText]}>{error}</Text>
+            <TouchableOpacity
+              style={[styles.retryButton, isDarkMode && styles.darkRetryButton]}
+              onPress={() => router.push("/")}
+            >
+              <Text style={[styles.retryButtonText, isDarkMode && styles.darkText]}>Go Back</Text>
             </TouchableOpacity>
-            <Animated.Text
-              style={[
-                isDarkMode && styles.darkText,
-                {
-                  opacity: scrollY.interpolate({
-                    inputRange,
-                    outputRange: [0, 0, 0, 1, 1],
-                  }),
-                },
-              ]}
-            >
-              {isDarkMode ? "Light Mode" : "Dark Mode"}
-            </Animated.Text>
           </View>
-          <View style={{ flexDirection: "row" }}>
-            <Animated.View
-              style={[
-                styles.icon,
-                {
-                  opacity: scrollY.interpolate({
-                    inputRange,
-                    outputRange: [0, 0, 0, 1, 1],
-                  }),
-                },
-              ]}
-            >
-              <Entypo name="export" size={24} color={isDarkMode ? "white" : "black"} />
-            </Animated.View>
-            <Animated.View
-              style={[
-                styles.icon,
-                {
-                  transform: [
-                    {
-                      translateX: scrollY.interpolate({
-                        inputRange,
-                        outputRange: [60, 60, 60, 0, 0],
-                      }),
-                    },
-                  ],
-                },
-              ]}
-            >
-              <Entypo name="credit" size={24} color="green" />
-            </Animated.View>
-            <Animated.View
-              style={[
-                styles.icon,
-                {
-                  opacity: scrollY.interpolate({
-                    inputRange,
-                    outputRange: [0, 0, 0, 1, 1],
-                  }),
-                },
-              ]}
-            >
-              <Entypo name="share-alternative" size={24} color={isDarkMode ? "white" : "black"} />
-            </Animated.View>
-          </View>
-        </Animated.View>
-      )}
-      {showMenu && <Menu onClose={() => setShowMenu(false)} />}
+        ) : (
+          <>
+            {pageContent?.coverImage && (
+              <Image
+                source={{ uri: pageContent.coverImage }}
+                style={styles.coverImage}
+                resizeMode="cover"
+              />
+            )}
+            {pageContent?.blocks.map((block, index) => (
+              <View key={`block-${index}`}>{renderBlock(block, isDarkMode)}</View>
+            ))}
+          </>
+        )}
+      </ScrollView>
+
+      {showMenu && <Menu onClose={() => setShowMenu(false)} isDarkMode={isDarkMode} />}
     </SafeAreaView>
   );
 };
 
-StickyHeader.displayName = "StickyHeader";
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: theme.colorWhite,
   },
   darkContainer: {
-    backgroundColor: "#1A1A1A",
+    backgroundColor: theme.colorDark,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "#E5E5E5",
+    borderBottomColor: theme.exploreCard.buttonBackground,
   },
   headerButton: {
     padding: 8,
   },
-  progressContainer: {
+  title: {
     flex: 1,
-    alignItems: "center",
-  },
-  progressText: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "600",
-    color: "#000",
+    color: theme.colorDark,
+    textAlign: "center",
+    marginHorizontal: 16,
   },
-  darkScrollView: {
-    backgroundColor: "#1A1A1A",
+  content: {
+    flex: 1,
+    padding: 16,
   },
-  darkText: {
-    color: "#FFFFFF",
-  },
-  featuredImage: {
-    width: 50,
-    height: 50,
-    resizeMode: "cover",
-    marginRight: 20,
-    borderRadius: 10,
-  },
-  bottomActions: {
-    height: 80,
-    backgroundColor: "white",
+  centerContainer: {
+    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row",
+    minHeight: 300,
+  },
+  coverImage: {
+    width: "100%",
+    height: 200,
+    marginBottom: 20,
+    borderRadius: 12,
+  },
+  imageContainer: {
+    marginVertical: 10,
+    borderRadius: 8,
+    overflow: "hidden",
   },
   image: {
     width: "100%",
-    height: height * 0.4,
-    resizeMode: "cover",
-    marginBottom: 20,
+    height: 200,
+    backgroundColor: theme.exploreCard.buttonBackground,
   },
-  featuredTitle: {
-    fontSize: 24,
-    fontWeight: "800",
-    marginVertical: 20,
+  imageCaption: {
+    fontSize: 14,
+    color: "#666",
+    textAlign: "center",
+    marginTop: 8,
   },
-  heading: {
-    fontSize: 32,
-    fontWeight: "800",
-    marginBottom: 30,
+  codeBlock: {
+    backgroundColor: "#f6f8fa",
+    borderRadius: 8,
+    marginVertical: 10,
+    overflow: "hidden",
+  },
+  codeHeader: {
+    padding: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: "rgba(0,0,0,0.1)",
+  },
+  codeLanguage: {
+    fontSize: 12,
+    color: "#666",
+    textTransform: "uppercase",
+  },
+  darkCodeBlock: {
+    backgroundColor: "#1e1e1e",
+  },
+  codeText: {
+    fontFamily: "monospace",
+    fontSize: 14,
+    padding: 16,
   },
   paragraph: {
-    flex: 1,
-    marginBottom: 10,
-    fontSize: 14,
-    lineHeight: 16 * 1.5,
+    fontSize: 16,
+    lineHeight: 24,
+    marginVertical: 8,
+    color: theme.colorDark,
   },
-  icon: {
-    height: 60,
-    width: 60,
-    alignItems: "center",
-    justifyContent: "center",
+  darkText: {
+    color: theme.colorWhite,
+  },
+  errorText: {
+    fontSize: 16,
+    color: theme.colorDark,
+    textAlign: "center",
+    marginBottom: 16,
+  },
+  retryButton: {
+    padding: 12,
+    backgroundColor: theme.exploreCard.buttonBackground,
+    borderRadius: 8,
+  },
+  darkRetryButton: {
+    backgroundColor: theme.exploreCard.background,
+  },
+  retryButtonText: {
+    fontSize: 16,
+    fontWeight: "600",
   },
 });
-
-export default StickyHeader;

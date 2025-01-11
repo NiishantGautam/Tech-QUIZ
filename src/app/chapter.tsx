@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useLocalSearchParams } from "expo-router";
-import StickyHeader from "../components/StickyHeader";
+import { StickyHeader } from "../components/StickyHeader";
 import { View } from "react-native";
 
 export default function ChapterPage() {
@@ -15,7 +15,7 @@ export default function ChapterPage() {
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <StickyHeader />
+      <StickyHeader title={title as string} />
     </View>
   );
 }

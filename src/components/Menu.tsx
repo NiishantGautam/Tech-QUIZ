@@ -67,9 +67,10 @@ const MenuItem = ({ item, index }: { item: (typeof _menu)[0]; index: number }) =
 
 interface MenuProps {
   onClose: () => void;
+  isDarkMode: boolean;
 }
 
-export const Menu: React.FC<MenuProps> = ({ onClose }) => {
+export const Menu: React.FC<MenuProps> = ({ onClose, isDarkMode }) => {
   const [fontsLoaded] = useFonts({
     Inter_500Medium,
     Inter_700Bold,

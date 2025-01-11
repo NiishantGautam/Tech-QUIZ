@@ -18,6 +18,7 @@
     "@clerk/types": "^4.40.1",
     "@expo-google-fonts/inter": "^0.2.3",
     "@expo/vector-icons": "^14.0.2",
+    "@notionhq/client": "^2.2.15",
     "expo": "~52.0.23",
     "expo-constants": "~17.0.3",
     "expo-font": "~13.0.2",

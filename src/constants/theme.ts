@@ -3,6 +3,15 @@ export const theme = {
   colorDark: "#1A1A1A",
   colorLight: "#FFFFFF",
   colorGray: "#lightgray",
+  colorWhite: "#FFFFFF",
+
+  // Explore card specific
+  exploreCard: {
+    background: "#1A1A1A",
+    buttonBackground: "rgba(32, 32, 32, 0.8)",
+    textColor: "#FFFFFF",
+    shadowColor: "#000000",
+  },
 
   // Background colors
   bgPrimary: "#FDFEF4",
@@ -24,7 +33,6 @@ export const theme = {
 
   // Additional colors
   colorCerulean: "#1a759f",
-  colorWhite: "#fff",
   colorLightGray: "#A0A0A0",
   colorPeach: "#F3B9A0",
   colorTeal: "#5BB5B0",
