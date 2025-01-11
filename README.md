@@ -17,28 +17,57 @@ Tech-QUIZ/
 │   │   │   ├── Onboarding.tsx      # Onboarding screens
 │   │   │   ├── sign-in.tsx         # Sign in screen
 │   │   │   └── sign-up.tsx         # Sign up screen
-│   │   ├── (main)/
-│   │   │   ├── _layout.tsx         # Main app layout
-│   │   │   ├── index.tsx           # Home screen
-│   │   │   └── quiz.tsx            # Quiz interface
+│   │   ├── chapter.tsx             # Chapter content display
 │   │   └── _layout.tsx             # Root layout
+│   ├── components/
+│   │   ├── ExploreCard.tsx         # Explore chapters component
+│   │   ├── Menu.tsx                # Navigation menu
+│   │   └── StickyHeader.tsx        # Chapter header with Notion content
+│   ├── constants/
+│   │   └── theme.ts                # Theme configuration
+│   ├── services/
+│   │   ├── notion-api.ts           # Notion integration service
+│   │   └── posthog.ts              # Analytics service
 │   └── utils/
-│       └── cache.ts                 # Token caching utilities
-├── assets/                          # Images and static assets
-│   └── area.gif                    # App demo animation
-├── .gitignore
-├── app.json
-├── babel.config.js
+│       └── cache.ts                # Token caching utilities
+├── assets/                         # Images and static assets
+├── .env                           # Environment variables
+├── app.json                       # Expo configuration
 ├── package.json
 └── README.md
 ```
 
 ## Changelog
 
+### Version 0.2.0 (2025-01-11)
+
+#### Added
+- Notion API integration for dynamic content
+- Dark mode support with toggle
+- Chapter content rendering with multiple block types
+  - Text blocks with formatting
+  - Image blocks with captions
+  - Code blocks with syntax highlighting
+- New ExploreCard component for chapter navigation
+- Custom StickyHeader component with progress tracking
+
+#### Enhanced
+- Improved error handling and loading states
+- Better TypeScript type definitions
+- Modern UI with consistent theming
+- Responsive layout improvements
+- Code organization and structure
+
+#### Technical
+- Enabled React Native New Architecture
+- Removed @notionhq/client dependency for lighter bundle
+- Implemented direct Notion REST API integration
+- Added proper error boundaries
+- Enhanced component props interfaces
+
 ### Version 0.1.0 (2025-01-08)
 
 #### Added
-
 - Initial project setup with Expo and React Native
 - Authentication system using Clerk
 - Onboarding screens with learning methodology
@@ -74,9 +103,11 @@ Tech-QUIZ/
    ```
 3. Set up environment variables:
    - Create a `.env` file
-   - Add your Clerk publishable key:
+   - Add your keys:
      ```
-     EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=your_key_here
+     EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_key
+     EXPO_PUBLIC_NOTION_API_KEY=your_notion_key
+     EXPO_PUBLIC_NOTION_PAGE_ID=your_notion_page_id
      ```
 4. Start the development server:
    ```bash
