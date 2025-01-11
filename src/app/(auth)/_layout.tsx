@@ -12,34 +12,27 @@ export default function AuthRoutesLayout() {
   return (
     <Stack
       screenOptions={{
-        headerShown: false, // Hides the header for all auth screens
-        contentStyle: { backgroundColor: "#fff" },
-        animation: "slide_from_right",
+        headerShown: false,
+        animation: "fade",
       }}
     >
       <Stack.Screen
-        name="onboarding"
-        options={
-          {
-            // Specific options for onboarding if needed
-          }
-        }
+        name="Onboarding"
+        options={{
+          title: "Welcome",
+        }}
       />
       <Stack.Screen
         name="sign-in"
-        options={
-          {
-            // Specific options for sign-in if needed
-          }
-        }
+        options={{
+          title: "Sign In",
+        }}
       />
       <Stack.Screen
         name="sign-up"
-        options={
-          {
-            // Specific options for sign-up if needed
-          }
-        }
+        options={{
+          title: "Sign Up",
+        }}
       />
     </Stack>
   );

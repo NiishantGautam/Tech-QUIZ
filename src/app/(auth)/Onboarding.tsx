@@ -2,13 +2,10 @@ import * as React from "react";
 import { StatusBar, Animated, Text, Image, View, StyleSheet, Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Link, useRouter } from "expo-router";
+import * as Haptics from "expo-haptics";
 const { width, height } = Dimensions.get("screen");
 
-// https://www.flaticon.com/packs/retro-wave
-// inspiration: https://dribbble.com/shots/11164698-Onboarding-screens-animation
-// https://twitter.com/mironcatalin/status/1321180191935373312
-
-const bgs = ["#A5BBFF", "#DDBEFE", "#FF63ED", "#B98EFF"];
+const bgs = ["#4158D0", "#C850C0", "#4158D0", "#FFCC70"];
 const DATA = [
   {
     key: "3571572",
@@ -49,8 +46,6 @@ export default function App() {
     outputRange: bgs,
   });
 
-  // Math to output [0, 1] range for input based on
-  // scrollX position and width of the screen. ??
   const YOLO = Animated.modulo(
     Animated.divide(Animated.modulo(scrollX, width), new Animated.Value(width)),
     1,
@@ -159,53 +154,25 @@ export default function App() {
       >
         <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
           <TouchableOpacity
+            style={styles.buttonContainer}
             onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
               router.push("/(auth)/sign-in");
             }}
           >
-            <View
-              style={{
-                paddingVertical: 16,
-                paddingHorizontal: 22,
-                borderRadius: 12,
-                backgroundColor: "rgba(255,255,255,0.8)",
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: "400",
-                  opacity: 0.9,
-                  letterSpacing: 1,
-                }}
-              >
-                Log in
-              </Text>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Log in</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
+            style={styles.buttonContainer}
             onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
               router.push("/(auth)/sign-up");
             }}
           >
-            <View
-              style={{
-                paddingVertical: 16,
-                paddingHorizontal: 22,
-                borderRadius: 12,
-                backgroundColor: "rgba(255,255,255,0.8)",
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: "400",
-                  opacity: 0.9,
-                  letterSpacing: 1,
-                }}
-              >
-                Create account
-              </Text>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Create account</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -252,3 +219,31 @@ export default function App() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  button: {
+    paddingVertical: 16,
+    paddingHorizontal: 22,
+    borderRadius: 12,
+    backgroundColor: "rgba(255,255,255,0.8)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: "500",
+    opacity: 0.9,
+    letterSpacing: 1,
+    color: "#4158D0",
+  },
+});

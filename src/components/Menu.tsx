@@ -5,32 +5,67 @@ import { AnimatePresence, MotiView, MotiText } from "moti";
 import { useFonts, Inter_500Medium, Inter_700Bold, Inter_900Black } from "@expo-google-fonts/inter";
 import { Feather } from "@expo/vector-icons";
 import { Easing } from "react-native-reanimated";
+import { useAuth } from "@clerk/clerk-expo";
 
 const { height } = Dimensions.get("window");
 
+// Constants for styling and animation
 const _logo = "https://cdn-icons-png.flaticon.com/512/3468/3468306.png";
 const _color = "#E0BDFC";
-const _arrowColor = "#A1E8C3";
 const _spacing = 10;
 const _logoSize = 80;
-
 const _duration = 1000;
 const _delay = 60;
-const _logoDelay = _duration * 0.1;
 
+// Menu items configuration
 const _menu = [
   { key: "1", label: "Profile", icon: "user" },
   { key: "2", label: "Practice", icon: "book" },
   { key: "3", label: "Statistics", icon: "bar-chart-2" },
   { key: "4", label: "Settings", icon: "settings" },
-  { key: "5", label: "Sign Out", icon: "log-out", isDestructive: true },
 ];
 
+// Animation transition configuration
 const _transition = {
   type: "timing" as const,
   duration: _duration,
   easing: Easing.bezier(0.16, 1, 0.3, 1),
 };
+
+// Sign Out Button Component
+const SignOutItem = () => {
+  const { signOut } = useAuth();
+
+  return (
+    <MotiView
+      from={{ opacity: 0, translateY: 20 }}
+      animate={{ opacity: 1, translateY: 0 }}
+      transition={{ ..._transition, delay: _delay * _menu.length }}
+      style={styles.menuItem}
+    >
+      <Pressable onPress={() => signOut()} style={styles.menuItemContent}>
+        <Feather name="log-out" size={24} color="#FF6B6B" />
+        <MotiText style={[styles.menuText, styles.destructiveText]}>Sign Out</MotiText>
+      </Pressable>
+    </MotiView>
+  );
+};
+
+// Menu Item Component
+const MenuItem = ({ item, index }: { item: (typeof _menu)[0]; index: number }) => (
+  <MotiView
+    key={item.key}
+    from={{ opacity: 0, translateY: 20 }}
+    animate={{ opacity: 1, translateY: 0 }}
+    transition={{ ..._transition, delay: _delay * index }}
+    style={styles.menuItem}
+  >
+    <Pressable style={styles.menuItemContent}>
+      <Feather name={item.icon as any} size={24} color={_color} />
+      <MotiText style={styles.menuText}>{item.label}</MotiText>
+    </Pressable>
+  </MotiView>
+);
 
 interface MenuProps {
   onClose: () => void;
@@ -43,25 +78,14 @@ export const Menu: React.FC<MenuProps> = ({ onClose }) => {
     Inter_900Black,
   });
 
-  if (!fontsLoaded) {
-    return null;
-  }
+  if (!fontsLoaded) return null;
 
   return (
     <AnimatePresence>
       <MotiView
-        from={{
-          opacity: 0,
-          scale: 0.9,
-        }}
-        animate={{
-          opacity: 1,
-          scale: 1,
-        }}
-        exit={{
-          opacity: 0,
-          scale: 0.9,
-        }}
+        from={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.9 }}
         transition={_transition}
         style={styles.container}
       >
@@ -71,33 +95,13 @@ export const Menu: React.FC<MenuProps> = ({ onClose }) => {
 
         <Image source={{ uri: _logo }} style={styles.logo} />
 
+        {/* Regular menu items */}
         {_menu.map((item, index) => (
-          <MotiView
-            key={item.key}
-            from={{
-              opacity: 0,
-              translateY: 20,
-            }}
-            animate={{
-              opacity: 1,
-              translateY: 0,
-            }}
-            transition={{
-              ..._transition,
-              delay: _delay * index,
-            }}
-            style={styles.menuItem}
-          >
-            <Feather
-              name={item.icon as any}
-              size={24}
-              color={item.isDestructive ? "#FF6B6B" : _color}
-            />
-            <MotiText style={[styles.menuText, item.isDestructive && styles.destructiveText]}>
-              {item.label}
-            </MotiText>
-          </MotiView>
+          <MenuItem key={item.key} item={item} index={index} />
         ))}
+
+        {/* Sign out button */}
+        <SignOutItem />
       </MotiView>
     </AnimatePresence>
   );
@@ -128,11 +132,14 @@ const styles = StyleSheet.create({
     borderRadius: _logoSize / 2,
   },
   menuItem: {
+    width: "100%",
+    maxWidth: 280,
+    marginVertical: _spacing,
+  },
+  menuItemContent: {
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: _spacing * 1.5,
-    width: "100%",
-    maxWidth: 280,
   },
   menuText: {
     color: _color,

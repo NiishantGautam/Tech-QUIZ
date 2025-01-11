@@ -13,6 +13,7 @@ import { useRouter } from "expo-router";
 import { useSignUp } from "@clerk/clerk-expo";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
+import * as Haptics from "expo-haptics";
 
 export default function SignUp() {
   // Navigation
@@ -29,9 +30,18 @@ export default function SignUp() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [pendingVerification, setPendingVerification] = useState(false);
+  const [isEmailFocused, setIsEmailFocused] = useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [isCodeFocused, setIsCodeFocused] = useState(false);
 
   // Handle sign up
   const onSignUp = async () => {
+    if (!email || !password) {
+      setError("Please enter both email and password");
+      return;
+    }
+
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     if (!isLoaded) return;
 
     try {
@@ -51,6 +61,7 @@ export default function SignUp() {
       setPendingVerification(true);
     } catch (err: any) {
       setError(err.errors?.[0]?.message || "Something went wrong");
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
     } finally {
       setLoading(false);
     }
@@ -77,9 +88,11 @@ export default function SignUp() {
         router.push("/(main)");
       } else {
         setError("Verification failed. Please try again.");
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       }
     } catch (err: any) {
       setError(err.errors?.[0]?.message || "Verification failed");
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
     } finally {
       setLoading(false);
     }
@@ -103,22 +116,28 @@ export default function SignUp() {
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Verification Code</Text>
             <TextInput
-              style={styles.input}
+              style={[styles.input, isCodeFocused && styles.inputFocused]}
               placeholder="Enter verification code"
               value={code}
               onChangeText={setCode}
               keyboardType="number-pad"
               autoComplete="sms-otp"
               maxLength={6}
+              onFocus={() => setIsCodeFocused(true)}
+              onBlur={() => setIsCodeFocused(false)}
             />
           </View>
 
           {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
           <TouchableOpacity
-            style={[styles.button, loading && styles.buttonDisabled]}
+            style={[
+              styles.button,
+              loading && styles.buttonDisabled,
+              !code && styles.buttonInactive,
+            ]}
             onPress={onVerify}
-            disabled={loading || !code}
+            disabled={loading}
           >
             {loading ? (
               <ActivityIndicator color="#fff" />
@@ -131,7 +150,11 @@ export default function SignUp() {
         <View style={styles.footer}>
           <Text style={styles.footerText}>Didn't receive the code?</Text>
           <TouchableOpacity
-            onPress={() => signUp.prepareEmailAddressVerification({ strategy: "email_code" })}
+            onPress={() => {
+              if (!isLoaded) return;
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+              signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+            }}
             disabled={loading}
           >
             <Text style={styles.footerLink}>Resend code</Text>
@@ -158,13 +181,15 @@ export default function SignUp() {
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Email</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, isEmailFocused && styles.inputFocused]}
             placeholder="Enter your email"
             value={email}
             onChangeText={setEmail}
             autoCapitalize="none"
             keyboardType="email-address"
             autoComplete="email"
+            onFocus={() => setIsEmailFocused(true)}
+            onBlur={() => setIsEmailFocused(false)}
           />
         </View>
 
@@ -172,14 +197,22 @@ export default function SignUp() {
           <Text style={styles.label}>Password</Text>
           <View style={styles.passwordContainer}>
             <TextInput
-              style={[styles.input, styles.passwordInput]}
+              style={[styles.input, styles.passwordInput, isPasswordFocused && styles.inputFocused]}
               placeholder="Create a password"
               value={password}
               onChangeText={setPassword}
               secureTextEntry={!showPassword}
               autoComplete="password-new"
+              onFocus={() => setIsPasswordFocused(true)}
+              onBlur={() => setIsPasswordFocused(false)}
             />
-            <TouchableOpacity style={styles.eyeIcon} onPress={() => setShowPassword(!showPassword)}>
+            <TouchableOpacity
+              style={styles.eyeIcon}
+              onPress={() => {
+                Haptics.selectionAsync();
+                setShowPassword(!showPassword);
+              }}
+            >
               <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color="#666" />
             </TouchableOpacity>
           </View>
@@ -188,21 +221,30 @@ export default function SignUp() {
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
         <TouchableOpacity
-          style={[styles.button, loading && styles.buttonDisabled]}
+          style={[
+            styles.button,
+            loading && styles.buttonDisabled,
+            (!email || !password) && styles.buttonInactive,
+          ]}
           onPress={onSignUp}
-          disabled={loading || !email || !password}
+          disabled={loading}
         >
           {loading ? (
             <ActivityIndicator color="#fff" />
           ) : (
-            <Text style={styles.buttonText}>Sign Up</Text>
+            <Text style={styles.buttonText}>Create Account</Text>
           )}
         </TouchableOpacity>
       </View>
 
       <View style={styles.footer}>
         <Text style={styles.footerText}>Already have an account?</Text>
-        <TouchableOpacity onPress={() => router.push("/(auth)/sign-in")}>
+        <TouchableOpacity
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+            router.push("/(auth)/sign-in");
+          }}
+        >
           <Text style={styles.footerLink}>Sign in</Text>
         </TouchableOpacity>
       </View>
@@ -258,20 +300,12 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     fontSize: 16,
     width: "100%",
+    borderWidth: 2,
+    borderColor: "transparent",
   },
-  passwordContainer: {
-    position: "relative",
-    width: "100%",
-  },
-  passwordInput: {
-    paddingRight: 50, // Make room for the eye icon
-  },
-  eyeIcon: {
-    position: "absolute",
-    right: 12,
-    top: "50%",
-    transform: [{ translateY: -12 }],
-    padding: 4,
+  inputFocused: {
+    borderColor: "#007AFF",
+    backgroundColor: "#fff",
   },
   button: {
     backgroundColor: "#007AFF",
@@ -283,6 +317,9 @@ const styles = StyleSheet.create({
   },
   buttonDisabled: {
     opacity: 0.7,
+  },
+  buttonInactive: {
+    backgroundColor: "#99c4ff",
   },
   buttonText: {
     color: "#fff",
@@ -311,5 +348,19 @@ const styles = StyleSheet.create({
     color: "#007AFF",
     fontSize: 14,
     fontWeight: "500",
+  },
+  passwordContainer: {
+    position: "relative",
+    width: "100%",
+  },
+  passwordInput: {
+    paddingRight: 50, // Make room for the eye icon
+  },
+  eyeIcon: {
+    position: "absolute",
+    right: 12,
+    top: "50%",
+    transform: [{ translateY: -12 }],
+    padding: 4,
   },
 });

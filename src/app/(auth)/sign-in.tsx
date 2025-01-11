@@ -13,6 +13,7 @@ import { useRouter } from "expo-router";
 import { useSignIn } from "@clerk/clerk-expo";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
+import * as Haptics from "expo-haptics";
 
 export default function SignIn() {
   // Navigation
@@ -27,9 +28,17 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isEmailFocused, setIsEmailFocused] = useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
   // Handle sign in
   const onSignIn = async () => {
+    if (!email || !password) {
+      setError("Please enter both email and password");
+      return;
+    }
+
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     if (!isLoaded) return;
 
     try {
@@ -46,6 +55,7 @@ export default function SignIn() {
       await setActive({ session: completeSignIn.createdSessionId });
 
       // Navigate to main app
+
       router.push("/(main)");
     } catch (err: any) {
       setError(err.errors?.[0]?.message || "Something went wrong");
@@ -73,13 +83,15 @@ export default function SignIn() {
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Email</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, isEmailFocused && styles.inputFocused]}
             placeholder="Enter your email"
             value={email}
             onChangeText={setEmail}
             autoCapitalize="none"
             keyboardType="email-address"
             autoComplete="email"
+            onFocus={() => setIsEmailFocused(true)}
+            onBlur={() => setIsEmailFocused(false)}
           />
         </View>
 
@@ -88,12 +100,14 @@ export default function SignIn() {
           <Text style={styles.label}>Password</Text>
           <View style={styles.passwordContainer}>
             <TextInput
-              style={[styles.input, styles.passwordInput]}
+              style={[styles.input, styles.passwordInput, isPasswordFocused && styles.inputFocused]}
               placeholder="Enter your password"
               value={password}
               onChangeText={setPassword}
               secureTextEntry={!showPassword}
               autoComplete="password"
+              onFocus={() => setIsPasswordFocused(true)}
+              onBlur={() => setIsPasswordFocused(false)}
             />
             <TouchableOpacity style={styles.eyeIcon} onPress={() => setShowPassword(!showPassword)}>
               <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color="#666" />
@@ -106,9 +120,13 @@ export default function SignIn() {
 
         {/* Sign In Button */}
         <TouchableOpacity
-          style={[styles.button, loading && styles.buttonDisabled]}
+          style={[
+            styles.button,
+            loading && styles.buttonDisabled,
+            (!email || !password) && styles.buttonInactive,
+          ]}
           onPress={onSignIn}
-          disabled={loading || !email || !password}
+          disabled={loading}
         >
           {loading ? (
             <ActivityIndicator color="#fff" />
@@ -121,7 +139,12 @@ export default function SignIn() {
       {/* Footer Section */}
       <View style={styles.footer}>
         <Text style={styles.footerText}>Don't have an account?</Text>
-        <TouchableOpacity onPress={() => router.push("/(auth)/sign-up")}>
+        <TouchableOpacity
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+            router.push("/(auth)/sign-up");
+          }}
+        >
           <Text style={styles.footerLink}>Create account</Text>
         </TouchableOpacity>
       </View>
@@ -177,6 +200,12 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     fontSize: 16,
     width: "100%",
+    borderWidth: 2,
+    borderColor: "transparent",
+  },
+  inputFocused: {
+    borderColor: "#007AFF",
+    backgroundColor: "#fff",
   },
   button: {
     backgroundColor: "#007AFF",
@@ -188,6 +217,9 @@ const styles = StyleSheet.create({
   },
   buttonDisabled: {
     opacity: 0.7,
+  },
+  buttonInactive: {
+    backgroundColor: "#99c4ff",
   },
   buttonText: {
     color: "#fff",

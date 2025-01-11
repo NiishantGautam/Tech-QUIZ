@@ -28,6 +28,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuestionCard component with question text and answer options
 - AnswerOption component for quiz choices
 - Theme constants for consistent color management
+- Animated menu component with Moti transitions
+- Hamburger menu toggle functionality with haptic feedback
+- Menu items with Feather icons
+- Inter font integration for menu text
+- Dark overlay background for menu
+- Smooth animations for menu items entry/exit
 
 ### Changed
 
@@ -42,6 +48,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated QuizScreen to use theme colors
 - Enhanced QuestionCard and AnswerOption styling
 - Refactored inline styles to use theme constants
+- Updated babel configuration for react-native-reanimated
+- Standardized string quotes to double quotes
+- Improved code organization in Menu component
+
+### Fixed
+
+- TypeScript transition types for Moti animations
+- Code formatting and style consistency
+- Proper typing for menu component props
 
 ### Technical
 
@@ -100,6 +115,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [lint-staged Documentation](https://github.com/okonet/lint-staged)
 - [TypeScript in React Native](https://reactnative.dev/docs/typescript)
 - [Expo Router](https://docs.expo.dev/router/introduction/)
+- [Clerk Expo](https://clerk.com/docs/references/expo/overview)
 
 [Unreleased]: https://github.com/username/tech-quiz/compare/v0.2.0...HEAD
 [0.2.0]: https://github.com/username/tech-quiz/compare/v0.1.0...v0.2.0
