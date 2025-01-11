@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StatusBar, Animated, Text, Image, View, StyleSheet, Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 const { width, height } = Dimensions.get("screen");
 

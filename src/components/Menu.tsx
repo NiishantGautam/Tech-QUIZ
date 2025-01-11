@@ -1,13 +1,11 @@
 import React from "react";
-import { Dimensions, Pressable, Image, View, StyleSheet } from "react-native";
+import { Pressable, Image, StyleSheet } from "react-native";
 import Constants from "expo-constants";
 import { AnimatePresence, MotiView, MotiText } from "moti";
 import { useFonts, Inter_500Medium, Inter_700Bold, Inter_900Black } from "@expo-google-fonts/inter";
 import { Feather } from "@expo/vector-icons";
 import { Easing } from "react-native-reanimated";
 import { useAuth } from "@clerk/clerk-expo";
-
-const { height } = Dimensions.get("window");
 
 // Constants for styling and animation
 const _logo = "https://cdn-icons-png.flaticon.com/512/3468/3468306.png";

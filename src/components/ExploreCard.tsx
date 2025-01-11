@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
 import { theme } from "../constants/theme";
+import { useRouter } from "expo-router";
 
 const CHAPTERS = [
   "1. Intro to TypeScript",
@@ -21,6 +22,16 @@ interface ExploreCardProps {
 }
 
 export const ExploreCard = ({ onChapterPress }: ExploreCardProps) => {
+  const router = useRouter();
+
+  const handleChapterPress = (chapter: string) => {
+    router.push({
+      pathname: "/chapter",
+      params: { title: chapter },
+    });
+    onChapterPress?.(chapter);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -35,7 +46,7 @@ export const ExploreCard = ({ onChapterPress }: ExploreCardProps) => {
             <TouchableOpacity
               key={index}
               style={styles.chapterButton}
-              onPress={() => onChapterPress?.(chapter)}
+              onPress={() => handleChapterPress(chapter)}
             >
               <Text style={styles.chapterText}>{chapter}</Text>
             </TouchableOpacity>
