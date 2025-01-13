@@ -1,10 +1,11 @@
 # Tech-QUIZ Mobile App
 
-A modern quiz application built with React Native and Expo, featuring authentication, interactive learning, and progress tracking.
+A modern quiz application built with React Native and Expo, featuring authentication, interactive learning, flashcards, and progress tracking.
 
 ## Demo
 
-![Tech-QUIZ App Demo](assets/area.gif)
+### V0.1 Demo
+![Tech-QUIZ App V0.1 Demo](https://file.notion.so/f/f/6c0da47d-0ecd-43be-af30-cfa44ecc34ee/9f81a200-78c9-4682-92bb-29bac07066e1/demo.gif?table=block&id=17a16628-2d07-807e-8440-d3642f70e290&spaceId=6c0da47d-0ecd-43be-af30-cfa44ecc34ee&expirationTimestamp=1736755200000&signature=z4Ons8jvIfuECvEg1yFvcpQ_X2vU8DZ1CaBoxVqWyZw&downloadName=demo.gif)
 
 ## Project Structure
 
@@ -25,6 +26,13 @@ Tech-QUIZ/
 │   │   └── StickyHeader.tsx        # Chapter header with Notion content
 │   ├── constants/
 │   │   └── theme.ts                # Theme configuration
+│   ├── features/
+│   │   └── flashcards/             # Flashcard feature module
+│   │       ├── components/         # Flashcard-specific components
+│   │       ├── data/              # Mock data and constants
+│   │       ├── routes/            # Route components
+│   │       ├── screens/           # Flashcard screens
+│   │       └── types/             # TypeScript interfaces
 │   ├── services/
 │   │   ├── notion-api.ts           # Notion integration service
 │   │   └── posthog.ts              # Analytics service
@@ -37,7 +45,58 @@ Tech-QUIZ/
 └── README.md
 ```
 
+## Features
+
+### Core Features
+- Authentication with email verification
+- Dynamic content loading via Notion API
+- Interactive learning modules
+- Progress tracking
+- Dark mode support
+- Modern UI with consistent theming
+
+### Flashcards
+- Browse and search through flashcard decks by topics
+- Interactive flashcard review system with flip animation
+- Topic organization (Development, Project Management, Science)
+- Search functionality by title or tags
+- Consistent menu integration
+
+## Types
+
+### FlashcardDeck
+
+```typescript
+interface FlashcardDeck {
+  id: string;
+  title: string;
+  tags: string[];
+  count: number;
+  color: string;
+}
+```
+
+### Flashcard
+
+```typescript
+interface Flashcard {
+  id: string;
+  question: string;
+  answer: string;
+  deckId: string;
+}
+```
+
 ## Changelog
+
+### Version 0.2.1 (2025-01-12)
+
+#### Added
+- Flashcards feature with deck management
+- Interactive card review system
+- Topic-based organization
+- Search functionality for flashcard decks
+- Responsive flashcard UI with animations
 
 ### Version 0.2.0 (2025-01-11)
 
@@ -45,9 +104,6 @@ Tech-QUIZ/
 - Notion API integration for dynamic content
 - Dark mode support with toggle
 - Chapter content rendering with multiple block types
-  - Text blocks with formatting
-  - Image blocks with captions
-  - Code blocks with syntax highlighting
 - New ExploreCard component for chapter navigation
 - Custom StickyHeader component with progress tracking
 
@@ -72,27 +128,9 @@ Tech-QUIZ/
 - Authentication system using Clerk
 - Onboarding screens with learning methodology
 - Sign-in and sign-up screens with email verification
-- Password visibility toggle with eye icon
-- Token caching system
 - Basic quiz interface structure
 - Responsive layouts for all screens
 - Modern UI components and styling
-
-#### Enhanced
-
-- Centered authentication forms
-- Improved form validation and error handling
-- Added loading states for better UX
-- Implemented secure token storage
-- Enhanced navigation flow
-- Updated onboarding content with learning focus
-
-#### Security
-
-- Implemented secure password handling
-- Added email verification system
-- Secure token management
-- Protected routes based on authentication state
 
 ## Getting Started
 
@@ -113,6 +151,15 @@ Tech-QUIZ/
    ```bash
    npx expo start
    ```
+
+## Future Improvements
+
+- [ ] Add user progress tracking for flashcards
+- [ ] Implement spaced repetition algorithm
+- [ ] Add deck creation and editing functionality
+- [ ] Support for rich media in flashcards (images, code snippets)
+- [ ] Add offline support
+- [ ] Implement deck sharing functionality
 
 ## Contributing
 

@@ -29,6 +29,7 @@ flashcards/
 ## Types
 
 ### FlashcardDeck
+
 ```typescript
 interface FlashcardDeck {
   id: string;
@@ -40,6 +41,7 @@ interface FlashcardDeck {
 ```
 
 ### Flashcard
+
 ```typescript
 interface Flashcard {
   id: string;
@@ -55,8 +57,8 @@ The feature uses expo-router for navigation. To navigate to a deck review:
 
 ```typescript
 router.push({
-  pathname: '/features/flashcards/routes/deck',
-  params: { deckId }
+  pathname: "/features/flashcards/routes/deck",
+  params: { deckId },
 });
 ```
 
