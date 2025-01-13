@@ -5,7 +5,7 @@ A modern quiz application built with React Native and Expo, featuring authentica
 ## Demo
 
 ### V0.1 Demo
-![Tech-QUIZ App V0.1 Demo](https://file.notion.so/f/f/6c0da47d-0ecd-43be-af30-cfa44ecc34ee/9f81a200-78c9-4682-92bb-29bac07066e1/demo.gif?table=block&id=17a16628-2d07-807e-8440-d3642f70e290&spaceId=6c0da47d-0ecd-43be-af30-cfa44ecc34ee&expirationTimestamp=1736755200000&signature=z4Ons8jvIfuECvEg1yFvcpQ_X2vU8DZ1CaBoxVqWyZw&downloadName=demo.gif)
+[Click here to view the Tech-QUIZ App Demo](https://file.notion.so/f/f/6c0da47d-0ecd-43be-af30-cfa44ecc34ee/9f81a200-78c9-4682-92bb-29bac07066e1/demo.gif?table=block&id=17a16628-2d07-807e-8440-d3642f70e290&spaceId=6c0da47d-0ecd-43be-af30-cfa44ecc34ee&expirationTimestamp=1736755200000&signature=3Cb4crWYH5Pg-FGS_i3wkp6C0AZUlMvw7xVR4lYeKqk)
 
 ## Project Structure
 
@@ -62,75 +62,7 @@ Tech-QUIZ/
 - Search functionality by title or tags
 - Consistent menu integration
 
-## Types
 
-### FlashcardDeck
-
-```typescript
-interface FlashcardDeck {
-  id: string;
-  title: string;
-  tags: string[];
-  count: number;
-  color: string;
-}
-```
-
-### Flashcard
-
-```typescript
-interface Flashcard {
-  id: string;
-  question: string;
-  answer: string;
-  deckId: string;
-}
-```
-
-## Changelog
-
-### Version 0.2.1 (2025-01-12)
-
-#### Added
-- Flashcards feature with deck management
-- Interactive card review system
-- Topic-based organization
-- Search functionality for flashcard decks
-- Responsive flashcard UI with animations
-
-### Version 0.2.0 (2025-01-11)
-
-#### Added
-- Notion API integration for dynamic content
-- Dark mode support with toggle
-- Chapter content rendering with multiple block types
-- New ExploreCard component for chapter navigation
-- Custom StickyHeader component with progress tracking
-
-#### Enhanced
-- Improved error handling and loading states
-- Better TypeScript type definitions
-- Modern UI with consistent theming
-- Responsive layout improvements
-- Code organization and structure
-
-#### Technical
-- Enabled React Native New Architecture
-- Removed @notionhq/client dependency for lighter bundle
-- Implemented direct Notion REST API integration
-- Added proper error boundaries
-- Enhanced component props interfaces
-
-### Version 0.1.0 (2025-01-08)
-
-#### Added
-- Initial project setup with Expo and React Native
-- Authentication system using Clerk
-- Onboarding screens with learning methodology
-- Sign-in and sign-up screens with email verification
-- Basic quiz interface structure
-- Responsive layouts for all screens
-- Modern UI components and styling
 
 ## Getting Started
 
@@ -158,7 +90,7 @@ interface Flashcard {
 - [ ] Implement spaced repetition algorithm
 - [ ] Add deck creation and editing functionality
 - [ ] Support for rich media in flashcards (images, code snippets)
-- [ ] Add offline support
+- [ ] Add offline support, and integrate RAG. 
 - [ ] Implement deck sharing functionality
 
 ## Contributing
