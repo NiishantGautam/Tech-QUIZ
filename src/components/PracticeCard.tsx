@@ -22,7 +22,7 @@ export const PracticeCard = ({ questionCount = 63 }: PracticeCardProps) => {
         <Text style={styles.icon}>📝</Text>
       </View>
       <View style={styles.content}>
-        <Text style={styles.title}>Practice flashcards</Text>
+        <Text style={styles.title}>Practice Quiz questions</Text>
         <Text style={styles.description}>
           Answer questions based on the topics you are learning from our flashcards.
         </Text>

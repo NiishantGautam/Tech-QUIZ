@@ -8,6 +8,7 @@ import { ExploreCard } from "../../components/ExploreCard";
 import * as Haptics from "expo-haptics";
 import { Menu } from "../../components/Menu";
 import { useState } from "react";
+import { router } from "expo-router";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -72,10 +73,10 @@ export default function App() {
         </View>
         <StreakCard />
         <PracticeCard />
-        <ReviewCard />
+        <ReviewCard onPress={() => router.push("/review")} />
         <ExploreCard />
       </ScrollView>
-      {isMenuOpen && <Menu onClose={() => setIsMenuOpen(false)} />}
+      {isMenuOpen && <Menu onClose={() => setIsMenuOpen(false)} isDarkMode={true} />}
       <StatusBar style="light" />
     </SafeAreaView>
   );
