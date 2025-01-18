@@ -1,4 +1,4 @@
-# Tech-QUIZ Mobile App
+# Tech-Quiz Mobile App
 
 A modern quiz application built with React Native and Expo, featuring authentication, interactive learning, flashcards, and progress tracking.
 
@@ -84,15 +84,4 @@ Tech-QUIZ/
    npx expo start
    ```
 
-## Future Improvements
 
-- [ ] Add user progress tracking for flashcards
-- [ ] Implement spaced repetition algorithm
-- [ ] Add deck creation and editing functionality
-- [ ] Support for rich media in flashcards (images, code snippets)
-- [ ] Add offline support, and integrate RAG. 
-- [ ] Implement deck sharing functionality
-
-## Contributing
-
-Feel free to submit issues and enhancement requests.
